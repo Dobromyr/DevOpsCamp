@@ -14,7 +14,7 @@ jobs:
           creds: ${{ secrets.AZURE }}
 
       - name: rm
-        run: rm -f .git*  
+        run: rm -rf .git*  
         
       - name: Upload
         uses: azure/CLI@v1
