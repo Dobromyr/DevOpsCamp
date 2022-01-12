@@ -1,0 +1,25 @@
+name: Deploy web app to Azure Static Web Apps
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE }}
+
+      - name: rm
+        run: rm -f .git*  
+        
+      - name: Upload
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob upload-batch --account-name dobromyr --auth-mode key --source . --destination '$web'  
